@@ -5,9 +5,9 @@ astroid==2.4.2
 atomicwrites==1.4.0
 attrs==19.3.0
 autopep8==1.5.2
-awscli==1.18.115
+awscli==1.18.117
 Babel==2.8.0
-botocore==1.17.38
+botocore==1.17.40
 click==7.1.2
 colorama==0.4.3
 distlib==0.3.0
@@ -20,6 +20,7 @@ Flask-Cors==3.0.8
 Flask-Migrate==2.5.3
 Flask-Moment==0.9.0
 Flask-RESTful==0.3.8
+Flask-Script==2.0.6
 Flask-SQLAlchemy==2.4.3
 Flask-WTF==0.14.3
 future==0.18.2

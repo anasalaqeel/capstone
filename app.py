@@ -1,27 +1,35 @@
-import os
-from flask import Flask
-from models import setup_db
+from flask import Flask, request, jsonify, abort
+from flask_sqlalchemy import SQLAlchemy
+from models import setup_db, Movies, Actors
+import sys
 
-def create_app(test_config=None):
+app = Flask(__name__)
+setup_db(app)
 
-    app = Flask(__name__)
-    setup_db(app)
-    CORS(app)
+@app.route("/")
+def index():
+  return 'Hello World'
 
-    @app.route('/')
-    def get_greeting():
-        excited = os.environ['EXCITED']
-        greeting = "Hello" 
-        if excited == 'true': greeting = greeting + "!!!!!"
-        return greeting
+@app.route("/movies/create", methods=["POST"])
+def create_movie():
+    error = False
+    title = request.get_json()['title']
+    release_date = request.get_json()['releaseDate']
+    try:
+        added_movie = Movies(
+            title=title,
+            release_date=release_date
+        )
+        Movies.insert(added_movie)
+    except:
+        error = True
+        print(sys.exc_info())
+    finally:
+        if error:
+            abort (422)
+        else:
+            return jsonify({'success': True})
 
-    @app.route('/coolkids')
-    def be_cool():
-        return "Be cool, man, be coooool! You're almost a FSND grad!"
-
-    return app
-
-app = create_app()
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='127.0.0.1', port=5000, debug=True)
