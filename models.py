@@ -6,7 +6,7 @@ import json
 db = SQLAlchemy()
 
 def setup_db(app):
-    app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://postgres:1234@localhost:5432/capstone'
+    app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://zfckaisbrimmqr:b0a237b5797ef97a432179491bac2930931136c681c536c0c71f3c028685127f@ec2-35-175-155-248.compute-1.amazonaws.com:5432/d9pop022tk93e1'
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
