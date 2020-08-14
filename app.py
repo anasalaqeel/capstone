@@ -1,14 +1,19 @@
 from flask import Flask, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
-from models import setup_db, Movies, Actors
+from database.models import setup_db, Movies, Actors
 import sys
 
 app = Flask(__name__)
 setup_db(app)
 
-@app.route("/")
+
+# movies
+#------------------------------------------------------------
+@app.route("/movies")
 def index():
-  return 'Hello World'
+    get_movies = Movies.query.all()
+    print(get_movies)
+    return 'Hello World'
 
 @app.route("/movies/create", methods=["POST"])
 def create_movie():
