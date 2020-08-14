@@ -44,7 +44,7 @@ def create_movie():
 @app.route("/movies/<movie_id>", methods=["PATCH"])
 def movie_edit(movie_id):
   error = False
-  get_movie = Movies.query.filter_by(id=movie_id).first
+  get_movie = Movies.query.filter_by(id=movie_id).first()
   title = request.get_json()['title']
   release_date = request.get_json()['releaseDate']
   try:
@@ -58,7 +58,7 @@ def movie_edit(movie_id):
       if error:
           abort (422)
       else:
-          return jsonify({'success': True, "id": get_movie.id})
+          return jsonify({"success": True, "id": get_movie.id})
 
 # actors
 #------------------------------------------------------------
