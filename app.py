@@ -72,7 +72,7 @@ def movie_delete(movie_id):
         if error:
             abort (404)
         else:
-            return jsonify({'success': True, "id": get_movie.id)
+            return jsonify({'success': True, "id": get_movie.id})
 
 # actors
 #------------------------------------------------------------
