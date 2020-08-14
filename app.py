@@ -60,6 +60,20 @@ def movie_edit(movie_id):
         else:
             return jsonify({"success": True, "id": get_movie.id})
 
+@app.route("/movies/<movie_id>", methods=["DELETE"])
+def movie_delete(movie_id):
+    try:
+      get_movie = Movies.query.filter_by(id=movie_id).first()
+      Movies.delete(get_movie)
+    except:
+          erroe = True
+          print(sys.exc_info())
+    finally:
+        if error:
+            abort (404)
+        else:
+            return jsonify({'success': True, "id": get_movie.id)
+
 # actors
 #------------------------------------------------------------
 
