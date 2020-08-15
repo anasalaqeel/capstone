@@ -2,14 +2,17 @@ from flask import Flask, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 from database.models import setup_db, Movies, Actors
 import sys
+from auth.auth import AuthError, requires_auth
+from flask_cors import CORS
 
 app = Flask(__name__)
 setup_db(app)
-
+CORS(app)
 
 # movies
 #------------------------------------------------------------
 @app.route("/movies")
+@requires_auth('view:movies')
 def movies():
     get_movies = Movies.query.all()
     movies = []
@@ -23,6 +26,7 @@ def movies():
     return jsonify({"movies": movies})
 
 @app.route("/movies/create", methods=["POST"])
+@requires_auth('add:movies')
 def create_movie():
     error = False
     title = request.get_json()['title']
@@ -44,6 +48,7 @@ def create_movie():
             return jsonify({'success': True})
 
 @app.route("/movies/<movie_id>", methods=["PATCH"])
+@requires_auth('edit:movies')
 def movie_edit(movie_id):
     error = False
     get_movie = Movies.query.filter_by(id=movie_id).first()
@@ -63,6 +68,7 @@ def movie_edit(movie_id):
             return jsonify({"success": True, "id": get_movie.id})
 
 @app.route("/movies/<movie_id>", methods=["DELETE"])
+@requires_auth('delete:movies')
 def movie_delete(movie_id):
     try:
         get_movie = Movies.query.filter_by(id=movie_id).first()
@@ -79,6 +85,7 @@ def movie_delete(movie_id):
 # actors
 #------------------------------------------------------------
 @app.route("/actors")
+@requires_auth('view:actors')
 def actors():
     get_actors = Actors.query.all()
     actors = []
@@ -92,6 +99,7 @@ def actors():
     return jsonify({"actors": actors})
 
 @app.route("/actors/create", methods=["POST"])
+@requires_auth('add:actors')
 def create_actor():
     error = False
     name = request.get_json()['name']
@@ -113,6 +121,7 @@ def create_actor():
             return jsonify({'success': True})
 
 @app.route("/actors/<actor_id>", methods=["PATCH"])
+@requires_auth('edit:actors')
 def actor_edit(actor_id):
     error = False
     get_actor = Actors.query.filter_by(id=actor_id).first()
@@ -132,6 +141,7 @@ def actor_edit(actor_id):
             return jsonify({"success": True, "id": get_actor.id})
 
 @app.route("/actors/<actor_id>", methods=["DELETE"])
+@requires_auth('delete:actors')
 def actor_delete(actor_id):
     error = False
     try:
