@@ -1,19 +1,42 @@
 from flask import Flask, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
-from database.models import setup_db, Movies, Actors
+from .database.models import setup_db, Movies, Actors
 import sys
-from auth.auth import AuthError, requires_auth
+from .auth.auth import AuthError, requires_auth
 from flask_cors import CORS
+
+
 
 app = Flask(__name__)
 setup_db(app)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Headers',
+                             'Content-Type, Authorization')
+    response.headers.add('Access-Control-Allow-Methods',
+                             'GET, POST, PATCH, DELETE, OPTIONS')
+    return response
 
 # movies
 #------------------------------------------------------------
+@app.route("/")
+def index():
+    get_movies = Movies.query.all()
+    movies = []
+    for movie in get_movies:
+      movies.append({
+        "id": movie.id,
+        "title": movie.title,
+        "releaseDate": movie.release_date
+      })
+
+    return jsonify({"movies": movies})
+
 @app.route("/movies")
 @requires_auth('view:movies')
-def movies():
+def movies(payload):
     get_movies = Movies.query.all()
     movies = []
     for movie in get_movies:
@@ -27,7 +50,7 @@ def movies():
 
 @app.route("/movies/create", methods=["POST"])
 @requires_auth('add:movies')
-def create_movie():
+def create_movie(payload):
     error = False
     title = request.get_json()['title']
     release_date = request.get_json()['releaseDate']
@@ -49,7 +72,7 @@ def create_movie():
 
 @app.route("/movies/<movie_id>", methods=["PATCH"])
 @requires_auth('edit:movies')
-def movie_edit(movie_id):
+def movie_edit(payload, movie_id):
     error = False
     get_movie = Movies.query.filter_by(id=movie_id).first()
     title = request.get_json()['title']
@@ -69,7 +92,7 @@ def movie_edit(movie_id):
 
 @app.route("/movies/<movie_id>", methods=["DELETE"])
 @requires_auth('delete:movies')
-def movie_delete(movie_id):
+def movie_delete(payload, movie_id):
     try:
         get_movie = Movies.query.filter_by(id=movie_id).first()
         Movies.delete(get_movie)
@@ -86,7 +109,7 @@ def movie_delete(movie_id):
 #------------------------------------------------------------
 @app.route("/actors")
 @requires_auth('view:actors')
-def actors():
+def actors(payload):
     get_actors = Actors.query.all()
     actors = []
     for actor in get_actors:
@@ -100,7 +123,7 @@ def actors():
 
 @app.route("/actors/create", methods=["POST"])
 @requires_auth('add:actors')
-def create_actor():
+def create_actor(payload):
     error = False
     name = request.get_json()['name']
     age = request.get_json()['age']
@@ -122,7 +145,7 @@ def create_actor():
 
 @app.route("/actors/<actor_id>", methods=["PATCH"])
 @requires_auth('edit:actors')
-def actor_edit(actor_id):
+def actor_edit(payload, actor_id):
     error = False
     get_actor = Actors.query.filter_by(id=actor_id).first()
     name = request.get_json()['name']
@@ -142,7 +165,7 @@ def actor_edit(actor_id):
 
 @app.route("/actors/<actor_id>", methods=["DELETE"])
 @requires_auth('delete:actors')
-def actor_delete(actor_id):
+def actor_delete(payload, actor_id):
     error = False
     try:
         get_actor = Actors.query.filter_by(id=actor_id).first()
