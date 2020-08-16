@@ -3,10 +3,12 @@ from sqlalchemy import Column, String, Integer
 from flask_sqlalchemy import SQLAlchemy
 import json
 
+database_path = 'postgres://postgres:1234@localhost:5432/capstone'
+
 db = SQLAlchemy()
 
-def setup_db(app):
-    app.config["SQLALCHEMY_DATABASE_URI"] = 'postgres://zfckaisbrimmqr:b0a237b5797ef97a432179491bac2930931136c681c536c0c71f3c028685127f@ec2-35-175-155-248.compute-1.amazonaws.com:5432/d9pop022tk93e1'
+def setup_db(app, database_path=database_path):
+    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
@@ -15,8 +17,8 @@ def setup_db(app):
 class Movies(db.Model):
     __tablename__ = 'movies'
     id = Column(Integer(), primary_key=True)
-    title = Column(String(80))
-    release_date = Column(String(80))
+    title = Column(String(80), nullable=False)
+    release_date = Column(String(80), nullable=False)
 
     def insert(self):
         db.session.add(self)
@@ -32,8 +34,8 @@ class Movies(db.Model):
 class Actors(db.Model):
     __tablename__ = 'actors'
     id = Column(Integer(), primary_key=True)
-    name = Column(String(80))
-    age = Column(Integer())
+    name = Column(String(80), nullable=False)
+    age = Column(Integer(), nullable=False)
 
     def insert(self):
         db.session.add(self)
