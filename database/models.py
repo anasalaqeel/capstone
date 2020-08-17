@@ -7,11 +7,13 @@ database_path = 'postgres://zfckaisbrimmqr:b0a237b5797ef97a432179491bac293093113
 
 db = SQLAlchemy()
 
+
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
+
 
 def db_drop_and_create_all():
     """
@@ -20,7 +22,7 @@ def db_drop_and_create_all():
     """
     db.drop_all()
     db.create_all()
-    
+
 
 class Movies(db.Model):
     __tablename__ = 'movies'
@@ -38,6 +40,7 @@ class Movies(db.Model):
 
     def update(self):
         db.session.commit()
+
 
 class Actors(db.Model):
     __tablename__ = 'actors'
