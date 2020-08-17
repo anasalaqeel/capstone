@@ -26,7 +26,7 @@ class Movies(db.Model):
     __tablename__ = 'movies'
     id = Column(Integer(), primary_key=True)
     title = Column(String(80), nullable=False)
-    release_date = Column(Integer(80), nullable=False)
+    release_date = Column(Integer(), nullable=False)
 
     def insert(self):
         db.session.add(self)
