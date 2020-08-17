@@ -15,9 +15,8 @@ class CapstoneTestCase(unittest.TestCase):
         """Define test variables and initialize app."""
         self.app = create_app()
         self.client = self.app.test_client
-        self.user_token = f"Bearer {os.environ['TESTS_TOKEN']}"
-        self.database_name = "capstone_test"
-        self.database_path = "postgresql://{}/{}".format('postgres:1234@localhost:5432', self.database_name)
+        self.user_token = f"Bearer {os.environ['PRODUCER_TOKEN']}"
+        self.database_path = os.environ['TEST_DATABASE_URI']
         setup_db(self.app, self.database_path)
 
         # binds the app to the current context

@@ -12,13 +12,21 @@ def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
+
+def db_drop_and_create_all():
+    """
+    drops the database tables and starts fresh
+    can be used to initialize a clean database
+    """
+    db.drop_all()
+    db.create_all()
     
 
 class Movies(db.Model):
     __tablename__ = 'movies'
     id = Column(Integer(), primary_key=True)
     title = Column(String(80), nullable=False)
-    release_date = Column(String(80), nullable=False)
+    release_date = Column(Integer(80), nullable=False)
 
     def insert(self):
         db.session.add(self)
