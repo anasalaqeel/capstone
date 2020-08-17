@@ -67,7 +67,7 @@ class CapstoneTestCase(unittest.TestCase):
     def test_200_add_movie(self):
         movies_before = Movies.query.all()
         movie = {"title": "test movie title example","releaseDate": "05/08/2020"}
-        res = self.client().post('/movies/create', json=movie, headers={'Authorization': self.user_token})
+        res = self.client().post('/movies', json=movie, headers={'Authorization': self.user_token})
         data = json.loads(res.data)
         movies_after = Movies.query.all()
         self.assertTrue(len(movies_after) - len(movies_before) == 1)
@@ -75,7 +75,7 @@ class CapstoneTestCase(unittest.TestCase):
     def test_422_add_movie(self):
         movies_before = Movies.query.all()
         movie = {"title": None,"releaseDate": "05/08/2020"}
-        res = self.client().post('/movies/create', json=movie, headers={'Authorization': self.user_token})
+        res = self.client().post('/movies', json=movie, headers={'Authorization': self.user_token})
         data = json.loads(res.data)
         movies_after = Movies.query.all()
         self.assertTrue(len(movies_after) - len(movies_before) == 0)
@@ -84,7 +84,7 @@ class CapstoneTestCase(unittest.TestCase):
     def test_200_add_actor(self):
         actors_before = Actors.query.all()
         actor = {"name": "test Hey its my name!","age": 99}
-        res = self.client().post('/actors/create', json=actor, headers={'Authorization': self.user_token})
+        res = self.client().post('/actors', json=actor, headers={'Authorization': self.user_token})
         data = json.loads(res.data)
         actors_after = Actors.query.all()
         self.assertTrue(len(actors_after) - len(actors_before) == 1)
@@ -92,7 +92,7 @@ class CapstoneTestCase(unittest.TestCase):
     def test_422_add_actor(self):
         actors_before = Actors.query.all()
         actor = {"name": None,"age": 99}
-        res = self.client().post('/actors/create', json=actor, headers={'Authorization': self.user_token})
+        res = self.client().post('/actors', json=actor, headers={'Authorization': self.user_token})
         data = json.loads(res.data)
         actors_after = Actors.query.all()
         self.assertTrue(len(actors_after) - len(actors_before) == 0)

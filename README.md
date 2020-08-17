@@ -134,7 +134,7 @@ The API will return the following errors based on how the request fails:
 
 </details>
 
-#### POST /actors/create
+#### POST /actors
  - General
    - creates a new actor.
    - requires `add:actors` permission.
@@ -244,7 +244,7 @@ The API will return the following errors based on how the request fails:
 
 </details>
 
-#### POST /movies/create
+#### POST /movies
  - General
    - creates a new movie.
    - requires `add:movies` permission.

@@ -12,7 +12,7 @@ def create_app(test_config=None):
     setup_db(app)
      # db_drop_and_create_all()
     CORS(app, resources={r"/*": {"origins": "*"}})
-
+    print(os.environ['DIRECTOR_TOKEN'])
 
     @app.after_request
     def after_request(response):
@@ -42,7 +42,7 @@ def create_app(test_config=None):
 
         return jsonify({"movies": movies})
 
-    @app.route("/movies/create", methods=["POST"])
+    @app.route("/movies", methods=["POST"])
     @requires_auth('add:movies')
     def create_movie(payload):
         error = False
@@ -116,7 +116,7 @@ def create_app(test_config=None):
 
         return jsonify({"actors": actors})
 
-    @app.route("/actors/create", methods=["POST"])
+    @app.route("/actors", methods=["POST"])
     @requires_auth('add:actors')
     def create_actor(payload):
         error = False

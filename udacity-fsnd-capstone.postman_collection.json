@@ -44,7 +44,7 @@
 							"response": []
 						},
 						{
-							"name": "http://127.0.0.1:5000/movies/create",
+							"name": "http://127.0.0.1:5000/movies",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -68,7 +68,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:5000/movies/create",
+									"raw": "http://127.0.0.1:5000/movies",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -78,8 +78,7 @@
 									],
 									"port": "5000",
 									"path": [
-										"movies",
-										"create"
+										"movies"
 									]
 								}
 							},
@@ -209,7 +208,7 @@
 							"response": []
 						},
 						{
-							"name": "http://127.0.0.1:5000/actors/create",
+							"name": "http://127.0.0.1:5000/actors",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -233,7 +232,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:5000/actors/create",
+									"raw": "http://127.0.0.1:5000/actors",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -243,8 +242,7 @@
 									],
 									"port": "5000",
 									"path": [
-										"actors",
-										"create"
+										"actors"
 									]
 								}
 							},
@@ -371,7 +369,7 @@
 							"response": []
 						},
 						{
-							"name": "http://127.0.0.1:5000/movies/create",
+							"name": "http://127.0.0.1:5000/movies",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -395,7 +393,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:5000/movies/create",
+									"raw": "http://127.0.0.1:5000/movies",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -405,8 +403,7 @@
 									],
 									"port": "5000",
 									"path": [
-										"movies",
-										"create"
+										"movies"
 									]
 								}
 							},
@@ -536,7 +533,7 @@
 							"response": []
 						},
 						{
-							"name": "http://127.0.0.1:5000/actors/create",
+							"name": "http://127.0.0.1:5000/actors",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -560,7 +557,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:5000/actors/create",
+									"raw": "http://127.0.0.1:5000/actors",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -570,8 +567,7 @@
 									],
 									"port": "5000",
 									"path": [
-										"actors",
-										"create"
+										"actors"
 									]
 								}
 							},
@@ -720,7 +716,7 @@
 							"response": []
 						},
 						{
-							"name": "http://127.0.0.1:5000/actors/create Copy",
+							"name": "http://127.0.0.1:5000/actors",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -744,7 +740,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:5000/movies/create",
+									"raw": "http://127.0.0.1:5000/movies",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -754,8 +750,7 @@
 									],
 									"port": "5000",
 									"path": [
-										"movies",
-										"create"
+										"movies"
 									]
 								}
 							},
@@ -886,7 +881,7 @@
 							"response": []
 						},
 						{
-							"name": "http://127.0.0.1:5000/actors/create",
+							"name": "http://127.0.0.1:5000/actors",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -910,7 +905,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://127.0.0.1:5000/actors/create",
+									"raw": "http://127.0.0.1:5000/actors",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -920,8 +915,7 @@
 									],
 									"port": "5000",
 									"path": [
-										"actors",
-										"create"
+										"actors"
 									]
 								}
 							},
