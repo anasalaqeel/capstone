@@ -10,20 +10,19 @@ def create_app(test_config=None):
 
     app = Flask(__name__)
     setup_db(app)
-     # db_drop_and_create_all()
     CORS(app, resources={r"/*": {"origins": "*"}})
-    print(os.environ['DIRECTOR_TOKEN'])
 
     @app.after_request
     def after_request(response):
-        response.headers.add('Access-Control-Allow-Headers',
-                                'Content-Type, Authorization')
-        response.headers.add('Access-Control-Allow-Methods',
-                                'GET, POST, PATCH, DELETE, OPTIONS')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        response.headers.add('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS')
         return response
 
+    # uncomment this line bellow once then run the app and recomment it again, and this to drop and creat database again
+    # db_drop_and_create_all()
+
     # movies
-    #------------------------------------------------------------
+    # ------------------------------------------------------------
     @app.route("/")
     def index():
         return jsonify({"Status": "yay its work well"})
@@ -50,17 +49,16 @@ def create_app(test_config=None):
         release_date = request.get_json()['releaseDate']
         try:
             added_movie = Movies(
-                title=title,
-                release_date=release_date
+                title = title,
+                release_date = release_date
             )
             Movies.insert(added_movie)
-        except:
+        except (TypeError, ValueError, KeyError):
             error = True
             print(sys.exc_info())
         finally:
             if error:
-                abort (422)
-                return jsonify({'success': False})
+                abort(422)
             else:
                 return jsonify({'success': True})
 
@@ -72,15 +70,15 @@ def create_app(test_config=None):
         title = request.get_json()['title']
         release_date = request.get_json()['releaseDate']
         try:
-            get_movie.title=title
-            get_movie.release_date=release_date
+            get_movie.title = title
+            get_movie.release_date = release_date
             get_movie.update()
-        except:
+        except (TypeError, ValueError, KeyError):
             error = True
             print(sys.exc_info())
         finally:
             if error:
-                abort (422)
+                abort(422)
             else:
                 return jsonify({"success": True, "id": get_movie.id})
 
@@ -89,19 +87,19 @@ def create_app(test_config=None):
     def movie_delete(payload, movie_id):
         error = False
         try:
-            get_movie = Movies.query.filter_by(id=movie_id).first()
+            get_movie = Movies.query.filter_by(id = movie_id).first()
             Movies.delete(get_movie)
         except:
             error = True
             print(sys.exc_info())
         finally:
             if error:
-                abort (404)
+                abort(404)
             else:
                 return jsonify({'success': True, "id": get_movie.id})
 
     # actors
-    #------------------------------------------------------------
+    # ------------------------------------------------------------
     @app.route("/actors")
     @requires_auth('view:actors')
     def actors(payload):
@@ -124,16 +122,16 @@ def create_app(test_config=None):
         age = request.get_json()['age']
         try:
             added_actor = Actors(
-                name=name,
-                age=age
+                name = name,
+                age = age
             )
             Actors.insert(added_actor)
-        except:
+        except (TypeError, ValueError, KeyError):
             error = True
             print(sys.exc_info())
         finally:
             if error:
-                abort (422)
+                abort(422)
             else:
                 return jsonify({'success': True})
 
@@ -145,15 +143,15 @@ def create_app(test_config=None):
         name = request.get_json()['name']
         age = request.get_json()['age']
         try:
-            get_actor.name=name
-            get_actor.age=age
+            get_actor.name = name
+            get_actor.age = age
             get_actor.update()
-        except:
+        except (TypeError, ValueError, KeyError):
             error = True
             print(sys.exc_info())
         finally:
             if error:
-                abort (422)
+                abort(422)
             else:
                 return jsonify({"success": True, "id": get_actor.id})
 
@@ -162,42 +160,41 @@ def create_app(test_config=None):
     def actor_delete(payload, actor_id):
         error = False
         try:
-            get_actor = Actors.query.filter_by(id=actor_id).first()
+            get_actor = Actors.query.filter_by(id = actor_id).first()
             Actors.delete(get_actor)
         except:
             error = True
             print(sys.exc_info())
         finally:
             if error:
-                abort (404)
+                abort(404)
             else:
                 return jsonify({'success': True, "id": get_actor.id})
 
     @app.errorhandler(422)
     def unprocessable(error):
         return jsonify({
-                        "success": False, 
-                        "error": 422,
-                        "message": "unprocessable"
-                        }), 422
+            "success": False, 
+            "error": 422,
+            "message": "unprocessable"
+        }), 422
 
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
-                        "success": False, 
-                        "error": 404,
-                        "message": "resource not found"
-                        }), 404
-
+            "success": False, 
+            "error": 404,
+            "message": "resource not found"
+        }), 404
 
     @app.errorhandler(401)
     def unauthorized(error):
         return jsonify({
-                        "success": False, 
-                        "error": 401,
-                        "message": "Unauthorized"
-                        }), 401
-        
+            "success": False, 
+            "error": 401,
+            "message": "Unauthorized"
+        }), 401
+
     @app.errorhandler(500)
     def server_error(error):
         return jsonify({
@@ -216,5 +213,6 @@ def create_app(test_config=None):
 
 
     return app
+
 
 app = create_app()

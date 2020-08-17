@@ -9,7 +9,8 @@ AUTH0_DOMAIN = 'anasalaqeel.us.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'movies'
 
-## AuthError Exception
+# AuthError Exception
+
 
 class AuthError(Exception):
     def __init__(self, error, status_code):
@@ -23,22 +24,22 @@ def get_token_auth_header():
     auth = request.headers.get('Authorization', None)
     if not auth:
         raise AuthError({
-        'code': 'authorization_header_missing',
-        'description': 'Authorization header is expected'
-    }, 401)
+            'code': 'authorization_header_missing',
+            'description': 'Authorization header is expected'
+        }, 401)
 
     parts = auth.split()
     if parts[0].lower() != 'bearer':
         raise AuthError({
-        'code': 'invalid_header',
-        'description' : 'Authorization header must start with "Bearer".'
-    }, 401)
+            'code': 'invalid_header',
+            'description': 'Authorization header must start with "Bearer".'
+        }, 401)
 
     elif len(parts) == 1:
         raise AuthError({
-        'code': 'invalid_header',
-        'description' : 'token not found'
-    }, 401)
+            'code': 'invalid_header',
+            'description': 'token not found'
+        }, 401)
 
     elif len(parts) > 2:
         raise AuthError({
@@ -49,6 +50,7 @@ def get_token_auth_header():
     token = parts[1]
     return token
 
+
 def check_permissions(permission, payload):
     if "permissions" not in payload:
         abort(400)
@@ -57,6 +59,7 @@ def check_permissions(permission, payload):
         abort(401)
 
     return True
+
 
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
@@ -107,9 +110,9 @@ def verify_decode_jwt(token):
                 'description': 'Unable to parse authentication token.'
             }, 400)
     raise AuthError({
-                'code': 'invalid_header',
+        'code': 'invalid_header',
                 'description': 'Unable to find the appropriate key.'
-            }, 400)
+    }, 400)
 
 
 def requires_auth(permission=''):
